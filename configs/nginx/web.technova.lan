@@ -1,0 +1,20 @@
+server {
+    listen 80;
+    server_name web.technova.lan;
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    server_name web.technova.lan;
+
+    ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
+    ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
+
+    root /var/www/technova;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
